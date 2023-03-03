@@ -5,7 +5,6 @@ import random
 import math
 from PIL import Image
 
-
 class TankKills:
     def __init__(self,screen_width,screen_height):
         pygame.init()
@@ -52,29 +51,37 @@ class TankKills:
         enemy_xchange = 0.3
         enemy_ychange = 0.2
         
-        pygame.display.set_caption("tank_kills")
+        pygame.display.set_caption("tank_kills_v2")
         player_x = 300
         player_y = 200
         playerx_change = 0
         textX = 10
         textY = 10
+        playery_change = 0
 
         while self.running:
             
             for event in pygame.event.get():
-                #--------keybinds------------
+                #--------keybinds------------#
                 if event.type == pygame.QUIT:
                     self.running = False
+
+                # When keys are pressed down
                 if event.type == pygame.KEYDOWN:
                     if event.key == K_LEFT:
+                        print("Pressing Left")
                         playerx_change = -0.5
                     if event.key == K_RIGHT:
+                        print("Pressing Right")
                         playerx_change = 0.5
-                    if event.key == K_UP:
-                        player_y -= random.randint(3,10)
-                    if event.key == K_DOWN:
-                        player_y += random.randint(3,10)
+                    if event.key == K_UP :
+                        print("Pressing UP")
+                        player_y -= random.randint(7,10)
+                    if event.key == K_DOWN :
+                        print("Pressing DOWN")
+                        player_y += random.randint(7,10)
 
+                # When keys comes up
                 if event.type == pygame.KEYUP:
                     if event.key == K_LEFT:
                         playerx_change = 0
@@ -82,10 +89,17 @@ class TankKills:
                     if event.key == K_RIGHT:
                         playerx_change = 0
                     
+                    if event.key == K_UP:
+                        playery_change = 0
+
+                    if event.key == K_DOWN:
+                        playery_change = 0
 
             self.screen.blit(self.background_image,(0,0))
-            #------boundries------
+
+            #------Screen boundries------#
             player_x += playerx_change
+            player_y += playery_change
             if player_x <=0:
                 player_x = 1
             elif player_x >= self.screen_height - 15:
@@ -94,7 +108,7 @@ class TankKills:
                 player_y = 0
             elif player_y >=self.screen_width - 15:
                 player_y = self.screen_width - 20
-            #-----------------------
+            #-----------------------#
             enemy_x += enemy_xchange
             enemy_y += enemy_ychange
             if enemy_x <=0:
@@ -110,25 +124,27 @@ class TankKills:
             self.enemy(enemy_x,enemy_y)
             self.player(player_x,player_y)
             collision = self.isCollision(enemy_x,enemy_y,player_x,player_y)
-            if collision:
 
+            if collision:
                 self.score_value +=1
                 enemy_x = random.randint(0,580)
                 enemy_y = 100
                 player_x = 300
                 player_y = 200
+            
+            # If enemy crosses border
             if enemy_y >=self.screen_height - 100:
-                self.gameOver()
+                return self.score_value
+                # self.gameOver()
 
 
             self.ShowScore(textX,textY)
             pygame.display.update()
-
-
-
-
+        return self.score_value
 
 
 if __name__=="__main__":
-    inst1 = TankKills(300,300).play()
+    inst1 = TankKills(600,600)
+    score = inst1.play()
+    print(f"score:{score}")
 
