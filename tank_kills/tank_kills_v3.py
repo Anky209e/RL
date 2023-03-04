@@ -61,7 +61,7 @@ class TankKills:
         self.screen.blit(score,(x,y))
 
     # Main play function
-    def play(self):
+    def play(self,move=None,press = ):
         
         textX = 10
         textY = 10
@@ -78,34 +78,34 @@ class TankKills:
             down:2
             left:3
             '''
+            print(move)
             # When keys are pressed down
-            if event.type == pygame.KEYDOWN:
-                print(event.key)
-                if (event.key == K_LEFT):
+            if move:
+                if (move == 3):
                     print("KEY: LEFT")
                     self.playerx_change = -0.4
-                if event.key == K_RIGHT:
+                if move == 1:
                     print("KEY: RIGHT")
                     self.playerx_change = 0.4
-                if event.key == K_UP:
+                if move == 0:
                     print("KEY: UP")
                     self.player_y -= 10
-                if event.key == K_DOWN:
+                if move == 2:
                     print("KEY: DOWN")
                     self.player_y += 20
 
             # When keys comes up
-            if event.type == pygame.KEYUP:
-                if event.key == K_LEFT:
+            if move:
+                if move == 3:
                     self.playerx_change = 0
                     
-                if event.key == K_RIGHT:
+                if move == 1:
                     self.playerx_change = 0
                 
-                if event.key == K_UP:
+                if move == 0:
                     self.playery_change = 0
 
-                if event.key == K_DOWN:
+                if move == 2:
                     self.playery_change = 0
 
         self.screen.blit(self.background_image,(0,0))
