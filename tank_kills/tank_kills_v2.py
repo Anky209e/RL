@@ -22,12 +22,12 @@ class TankKills:
         self.enemy_xchange = 0.3
         self.enemy_ychange = 0.2
 
-        self.playery_change = 0
         self.playerx_change = 0
+        self.playery_change = 0
         # Images and fonts
-        self.enemy_image = pygame.image.load("tank_kills/assets/90_soldier.png")
-        self.player_image = pygame.image.load("tank_kills/assets/90_tank.png")
-        self.background_image = pygame.image.load("tank_kills/assets/grass.jpg")
+        self.enemy_image = pygame.image.load("./assets/90_soldier.png")
+        self.player_image = pygame.image.load("./assets/90_tank.png")
+        self.background_image = pygame.image.load("./assets/grass.jpg")
         self.font = pygame.font.Font('freesansbold.ttf',32)
         self.screen = pygame.display.set_mode((screen_width,screen_height))
         self.running = True
@@ -80,7 +80,7 @@ class TankKills:
             '''
             # When keys are pressed down
             if event.type == pygame.KEYDOWN:
-                print(event.key)
+                
                 if (event.key == K_LEFT):
                     print("KEY: LEFT")
                     self.playerx_change = -0.4
@@ -154,6 +154,7 @@ class TankKills:
 
         self.ShowScore(textX,textY)
         pygame.display.update()
+        
         return self.running,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
 
 

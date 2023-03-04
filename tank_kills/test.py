@@ -14,6 +14,7 @@ ins = [
 keyboard = Controller()
 game_1 = TankKills(600,600)
 running = True
+
 while running:
     move = random.randint(0,3)
     running,score,pp,ep = game_1.play()
