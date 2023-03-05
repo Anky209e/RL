@@ -12,6 +12,8 @@ class TankKills:
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.score_value = 0
+
+        self.hit_reward = 0
         # Player Spawn cords
         self.player_x = 300 
         self.player_y = 400
@@ -65,6 +67,7 @@ class TankKills:
         
         textX = 10
         textY = 10
+        self.hit_reward = 0
         # while self.running:
             
         for event in pygame.event.get():
@@ -80,18 +83,19 @@ class TankKills:
             '''
             # When keys are pressed down
             if event.type == pygame.KEYDOWN:
+                # print("PRESS")
                 
                 if (event.key == K_LEFT):
-                    print("KEY: LEFT")
-                    self.playerx_change = -0.4
+                    # print("KEY: LEFT")
+                    self.playerx_change = -1
                 if event.key == K_RIGHT:
-                    print("KEY: RIGHT")
-                    self.playerx_change = 0.4
+                    # print("KEY: RIGHT")
+                    self.playerx_change = 1
                 if event.key == K_UP:
-                    print("KEY: UP")
+                    # print("KEY: UP")
                     self.player_y -= 10
                 if event.key == K_DOWN:
-                    print("KEY: DOWN")
+                    # print("KEY: DOWN")
                     self.player_y += 20
 
             # When keys comes up
@@ -141,6 +145,7 @@ class TankKills:
 
         if collision:
             self.score_value +=1
+            self.hit_reward = 1
             self.enemy_x = random.randint(0,580)
             self.enemy_y = 100
             self.player_x = 300
@@ -148,18 +153,26 @@ class TankKills:
         
         # If enemy crosses border
         if self.enemy_y >=self.screen_height - 100:
-            return False,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
+            return False,self.hit_reward,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
             # self.gameOver()
 
 
         self.ShowScore(textX,textY)
         pygame.display.update()
         
-        return self.running,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
+        return self.running,self.hit_reward,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
 
 
-if __name__=="__main__":
-    inst1 = TankKills(600,600)
-    score = inst1.play()
-    print(f"score:{score}")
-
+if __name__ == "__main__":
+    env = TankKills(600,600)
+    running = True
+    moves = []
+    while running:
+        # move = random.randint(0,len(ins)-1)
+        running,reward,score,pp,ep = env.play()
+        # keyboard.press(ins[move])
+        # keyboard.release(ins[move])
+        print(running,reward,score,pp,ep)
+        # moves.append(move)
+    if not running:
+        pygame.display.quit()
