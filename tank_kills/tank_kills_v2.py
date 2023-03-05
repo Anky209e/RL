@@ -13,7 +13,7 @@ class TankKills:
         self.screen_height = screen_height
         self.score_value = 0
 
-        self.hit_reward = 0
+        self.hit_reward = -5
         # Player Spawn cords
         self.player_x = 300 
         self.player_y = 400
@@ -87,16 +87,16 @@ class TankKills:
                 
                 if (event.key == K_LEFT):
                     # print("KEY: LEFT")
-                    self.playerx_change = -1
+                    self.player_x -= 30
                 if event.key == K_RIGHT:
                     # print("KEY: RIGHT")
-                    self.playerx_change = 1
+                    self.player_x += 30
                 if event.key == K_UP:
                     # print("KEY: UP")
-                    self.player_y -= 10
+                    self.player_y -= 30
                 if event.key == K_DOWN:
                     # print("KEY: DOWN")
-                    self.player_y += 20
+                    self.player_y += 30
 
             # When keys comes up
             if event.type == pygame.KEYUP:
@@ -145,7 +145,7 @@ class TankKills:
 
         if collision:
             self.score_value +=1
-            self.hit_reward = 1
+            self.hit_reward = 5
             self.enemy_x = random.randint(0,580)
             self.enemy_y = 100
             self.player_x = 300
@@ -153,6 +153,7 @@ class TankKills:
         
         # If enemy crosses border
         if self.enemy_y >=self.screen_height - 100:
+            self.hit_reward = -50
             return False,self.hit_reward,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
             # self.gameOver()
 
