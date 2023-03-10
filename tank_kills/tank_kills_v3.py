@@ -67,7 +67,7 @@ class TankKills:
         
         textX = 10
         textY = 10
-        self.hit_reward =  -5
+        self.hit_reward = -1
         # while self.running:
         self.screen.blit(self.background_image,(0,0))
         '''
@@ -135,7 +135,7 @@ class TankKills:
 
         if collision:
             self.score_value +=1
-            self.hit_reward = 5
+            self.hit_reward = 10
             self.enemy_x = random.randint(0,580)
             self.enemy_y = 100
             self.player_x = 300
