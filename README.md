@@ -1,2 +1,2 @@
 # RL
- Reinforcement Learning implementation
+ Reinforcement Learning Experiments
