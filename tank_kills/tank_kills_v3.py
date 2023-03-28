@@ -13,7 +13,7 @@ class TankKills:
         self.screen_height = screen_height
         self.score_value = 0
 
-        self.hit_reward = -5
+        self.hit_reward = 0
         # Player Spawn cords
         self.player_x = 300 
         self.player_y = 400
@@ -46,7 +46,7 @@ class TankKills:
     # Checks if player smashed enemy
     def isCollision(self):
         distance = math.sqrt(math.pow(self.enemy_x-self.player_x,2)+math.pow(self.enemy_y-self.player_y,2))
-        if distance <=random.randint(49,59):
+        if distance <=60:
             return True
         else:
             return False
@@ -67,7 +67,8 @@ class TankKills:
         
         textX = 10
         textY = 10
-        self.hit_reward = -1
+        distance = round(math.sqrt(math.pow(self.enemy_x-self.player_x,2)+math.pow(self.enemy_y-self.player_y,2))/600)
+        self.hit_reward = - distance 
         # while self.running:
         self.screen.blit(self.background_image,(0,0))
         '''
@@ -134,8 +135,8 @@ class TankKills:
         collision = self.isCollision()
 
         if collision:
-            self.score_value +=1
-            self.hit_reward = 10
+            self.score_value += 1
+            self.hit_reward = 50
             self.enemy_x = random.randint(0,580)
             self.enemy_y = 100
             self.player_x = 300
@@ -143,7 +144,7 @@ class TankKills:
         
         # If enemy crosses border
         if self.enemy_y >=self.screen_height - 100:
-            self.hit_reward = -50
+            self.hit_reward = - 30
             return False,self.hit_reward,self.score_value,[self.player_x,self.player_y],[self.enemy_x,self.enemy_y]
             # self.gameOver()
     
@@ -157,10 +158,10 @@ class TankKills:
 if __name__ == "__main__":
     env = TankKills(600,600)
     running = True
-    moves = []
+    moves = ["up","right","left","down"]
     while running:
-        # move = random.randint(0,len(ins)-1)
-        running,reward,score,pp,ep = env.play()
+        move = random.randint(0,3)
+        running,reward,score,pp,ep = env.play(action=moves[move])
         # keyboard.press(ins[move])
         # keyboard.release(ins[move])
         print(running,reward,score,pp,ep)
