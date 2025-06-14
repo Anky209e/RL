@@ -24,6 +24,8 @@ class TankKills:
         self.enemy_xchange = 0.3
         self.enemy_ychange = 0.2
 
+        # Set tank movement speed similar to enemy
+        self.tank_speed = 0.3
         self.playerx_change = 0
         self.playery_change = 0
         # Images and fonts
@@ -63,13 +65,11 @@ class TankKills:
         self.screen.blit(score,(x,y))
 
     # Main play function
-    def play(self,action):
-        
+    def play(self, action):
         textX = 10
         textY = 10
         distance = round(math.sqrt(math.pow(self.enemy_x-self.player_x,2)+math.pow(self.enemy_y-self.player_y,2))/600)
         self.hit_reward = - distance 
-        # while self.running:
         self.screen.blit(self.background_image,(0,0))
         '''
         up:0
@@ -77,6 +77,27 @@ class TankKills:
         down:2
         left:3
         '''
+        # Reset movement before applying new action
+        self.playerx_change = 0
+        self.playery_change = 0
+
+        if action == 0:  # up
+            self.playery_change = -self.tank_speed
+        elif action == 1:  # right
+            self.playerx_change = self.tank_speed
+        elif action == 2:  # down
+            self.playery_change = self.tank_speed
+        elif action == 3:  # left
+            self.playerx_change = -self.tank_speed
+
+        # Update player position
+        self.player_x += self.playerx_change
+        self.player_y += self.playery_change
+
+        # Optionally, clamp player position to screen bounds
+        self.player_x = max(0, min(self.player_x, self.screen_width - self.player_image.get_width()))
+        self.player_y = max(0, min(self.player_y, self.screen_height - self.player_image.get_height()))
+
         if True:
             if action == "left":
                 # print("KEY: LEFT")
